@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divya Rani — Backend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+:root {
+  --bg:        #f5f4f0;
+  --surface:   #ffffff;
+  --card:      #fafaf8;
+  --border:    #e2e0d8;
+  --ink:       #1a1916;
+  --muted:     #8a8780;
+  --accent:    #2d5a27;
+  --accent-lt: #4a9e41;
+  --accent-bg: #edf7ec;
+  --gold:      #b8860b;
+  --gold-bg:   #fdf8ed;
+  --radius:    10px;
+  --nav-h:     64px;
+  --shadow:    0 2px 20px rgba(0,0,0,0.07);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  --t: 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+body { background:var(--bg); color:var(--ink); font-family:'Lora',Georgia,serif; line-height:1.65; -webkit-font-smoothing:antialiased; }
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* NAV */
+nav { position:sticky; top:0; z-index:100; height:var(--nav-h); background:rgba(245,244,240,0.93); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-inner { max-width:1100px; margin:0 auto; padding:0 32px; height:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.nav-logo { font-family:'Montserrat',sans-serif; font-weight:800; font-size:18px; letter-spacing:-0.03em; color:var(--ink); text-decoration:none; }
+.nav-logo span { color:var(--accent); }
+.nav-links { display:flex; align-items:center; gap:2px; list-style:none; }
+.nav-links a { font-family:'Montserrat',sans-serif; font-size:13px; font-weight:500; color:var(--muted); text-decoration:none; padding:6px 12px; border-radius:6px; transition:color var(--t),background var(--t); }
+.nav-links a:hover, .nav-links a.active { color:var(--ink); background:rgba(0,0,0,0.05); }
+.nav-links a.active { color:var(--accent); }
+.nav-actions { display:flex; gap:8px; align-items:center; }
+
+/* BUTTONS */
+.btn { display:inline-flex; align-items:center; gap:7px; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:600; padding:9px 18px; border-radius:8px; cursor:pointer; text-decoration:none; transition:all var(--t); border:none; white-space:nowrap; }
+.btn svg { flex-shrink:0; }
+.btn-primary { background:var(--accent); color:white; box-shadow:0 2px 8px rgba(45,90,39,0.25); }
+.btn-primary:hover { background:#234820; box-shadow:0 4px 16px rgba(45,90,39,0.4); transform:translateY(-1px); }
+.btn-outline { background:transparent; color:var(--ink); border:1.5px solid var(--border); }
+.btn-outline:hover { background:var(--surface); border-color:var(--muted); transform:translateY(-1px); box-shadow:var(--shadow); }
+.btn-ghost { background:transparent; color:var(--muted); padding:9px 12px; }
+.btn-ghost:hover { color:var(--ink); background:rgba(0,0,0,0.05); }
+.btn-white { background:white; color:var(--ink); }
+.btn-white:hover { background:var(--bg); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.2); }
+.btn-dk { background:transparent; color:white; border:1.5px solid rgba(255,255,255,0.22); }
+.btn-dk:hover { background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.5); transform:translateY(-2px); }
+
+/* HERO */
+#hero { max-width:1100px; margin:0 auto; padding:88px 32px 72px; display:grid; grid-template-columns:1fr 340px; gap:64px; align-items:center; }
+.hero-kicker { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; display:flex; align-items:center; gap:8px; margin-bottom:20px; opacity:0; animation:fadeUp 0.5s 0.1s forwards; }
+.hero-kicker::before { content:''; width:24px; height:2px; background:var(--accent); border-radius:2px; }
+h1.hero-name { font-family:'Montserrat',sans-serif; font-size:clamp(44px,6vw,72px); font-weight:800; letter-spacing:-0.03em; line-height:1; margin-bottom:16px; opacity:0; animation:fadeUp 0.5s 0.2s forwards; }
+h1.hero-name span { display:block; color:var(--accent); }
+.hero-role { font-family:'Lora',serif; font-size:19px; font-style:italic; color:var(--muted); margin-bottom:24px; opacity:0; animation:fadeUp 0.5s 0.3s forwards; }
+.hero-bio { font-size:15px; color:#4a4845; line-height:1.78; max-width:520px; margin-bottom:32px; opacity:0; animation:fadeUp 0.5s 0.4s forwards; }
+.hero-cta { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px; opacity:0; animation:fadeUp 0.5s 0.5s forwards; }
+.hero-social { display:flex; gap:10px; opacity:0; animation:fadeUp 0.5s 0.6s forwards; }
+.social-link { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; border:1.5px solid var(--border); color:var(--muted); text-decoration:none; transition:all var(--t); }
+.social-link:hover { color:var(--ink); border-color:var(--ink); background:var(--surface); transform:translateY(-2px); box-shadow:var(--shadow); }
+
+/* HERO CARD */
+.hero-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:28px; box-shadow:var(--shadow-lg); opacity:0; animation:fadeLeft 0.6s 0.4s forwards; }
+.card-avatar { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,var(--accent-bg),#c8f0c0); display:flex; align-items:center; justify-content:center; font-family:'Montserrat',sans-serif; font-size:22px; font-weight:800; color:var(--accent); margin-bottom:14px; }
+.card-name { font-family:'Montserrat',sans-serif; font-weight:700; font-size:16px; margin-bottom:3px; }
+.card-title { font-size:12px; color:var(--muted); margin-bottom:22px; }
+.stat-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
+.stat-box { background:var(--bg); border-radius:8px; padding:12px; }
+.stat-num { font-family:'Montserrat',sans-serif; font-size:22px; font-weight:800; color:var(--ink); line-height:1; margin-bottom:3px; }
+.stat-num em { color:var(--accent); font-style:normal; }
+.stat-lbl { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
+.avail { display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); padding:10px 12px; background:var(--accent-bg); border-radius:8px; }
+.pulse { width:8px; height:8px; background:var(--accent-lt); border-radius:50%; position:relative; flex-shrink:0; }
+.pulse::after { content:''; position:absolute; inset:-3px; border-radius:50%; background:var(--accent-lt); opacity:0.4; animation:pulse 2s infinite; }
+
+/* SECTION SHARED */
+.wrap { max-width:1100px; margin:0 auto; padding:80px 32px; }
+.section-header { display:flex; align-items:center; gap:16px; margin-bottom:48px; }
+.eyebrow { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); background:var(--accent-bg); padding:4px 10px; border-radius:4px; white-space:nowrap; }
+.section-title { font-family:'Montserrat',sans-serif; font-size:clamp(22px,3vw,28px); font-weight:700; letter-spacing:-0.02em; color:var(--ink); white-space:nowrap; }
+.sec-line { flex:1; height:1px; background:var(--border); }
+.sep { max-width:1100px; margin:0 auto; padding:0 32px; }
+.sep hr { border:none; border-top:1px solid var(--border); }
+
+/* EXPERIENCE */
+.exp-card { display:grid; grid-template-columns:210px 1fr; gap:40px; padding:36px 0; border-bottom:1px solid var(--border); opacity:0; transform:translateY(16px); transition:opacity 0.5s,transform 0.5s; }
+.exp-card:last-child { border-bottom:none; }
+.exp-card.visible { opacity:1; transform:none; }
+.exp-company { font-family:'Montserrat',sans-serif; font-size:17px; font-weight:700; margin-bottom:4px; }
+.exp-period { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:6px; }
+.exp-loc { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+.role-badge { display:inline-flex; align-items:center; gap:6px; font-family:'Montserrat',sans-serif; font-size:12px; font-weight:600; color:var(--accent); background:var(--accent-bg); padding:5px 12px; border-radius:6px; margin-bottom:16px; }
+.role-badge.gold { color:var(--gold); background:var(--gold-bg); }
+.exp-points { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.exp-points li { font-size:14px; color:#4a4845; line-height:1.72; padding-left:18px; position:relative; }
+.exp-points li::before { content:'▸'; position:absolute; left:0; color:var(--accent); font-size:10px; top:5px; }
+.exp-points li strong { color:var(--ink); }
+.exp-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+.exp-tag { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); border:1px solid var(--border); padding:3px 10px; border-radius:4px; background:var(--card); }
+
+/* SKILLS */
+.skills-bg { background:var(--surface); }
+.skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.skill-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:22px; opacity:0; transform:translateY(12px); transition:opacity 0.4s,transform 0.4s,box-shadow 0.22s; }
+.skill-card.visible { opacity:1; transform:none; }
+.skill-card:hover { box-shadow:var(--shadow-lg); transform:translateY(-3px); }
+.skill-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:12px; }
+.skill-cat { font-family:'Montserrat',sans-serif; font-size:14px; font-weight:700; margin-bottom:12px; }
+.skill-pills { display:flex; flex-wrap:wrap; gap:6px; }
+.pill { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink); background:var(--surface); border:1px solid var(--border); padding:4px 10px; border-radius:20px; }
+
+/* EDUCATION */
+.edu-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:40px; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:center; box-shadow:var(--shadow); opacity:0; transform:translateY(14px); transition:opacity 0.5s,transform 0.5s; }
+.edu-card.visible { opacity:1; transform:none; }
+.edu-pill { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); background:var(--gold-bg); border:1px solid rgba(184,134,11,0.2); padding:4px 10px; border-radius:4px; display:inline-block; margin-bottom:12px; }
+.edu-institute { font-family:'Montserrat',sans-serif; font-size:24px; font-weight:800; margin-bottom:6px; letter-spacing:-0.02em; }
+.edu-degree { font-size:14px; color:var(--muted); }
+.edu-score { text-align:center; background:var(--bg); border-radius:12px; padding:22px 28px; }
+.score-num { font-family:'Montserrat',sans-serif; font-size:46px; font-weight:800; letter-spacing:-0.04em; color:var(--accent); line-height:1; }
+.score-label { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em; margin-top:4px; }
+
+/* ACHIEVEMENTS */
+.ach-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.ach-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px; display:flex; gap:16px; align-items:flex-start; box-shadow:var(--shadow); opacity:0; transform:translateY(14px); transition:opacity 0.5s,transform 0.5s,box-shadow 0.22s; }
+.ach-card.visible { opacity:1; transform:none; }
+.ach-card:hover { box-shadow:var(--shadow-lg); }
+.ach-emoji { font-size:30px; line-height:1; flex-shrink:0; }
+.ach-title { font-family:'Montserrat',sans-serif; font-size:15px; font-weight:700; margin-bottom:5px; }
+.ach-desc { font-size:13px; color:var(--muted); line-height:1.6; }
+
+/* CONTACT */
+.contact-bg { background:var(--ink); }
+.contact-heading { font-family:'Montserrat',sans-serif; font-size:clamp(32px,5vw,52px); font-weight:800; color:white; letter-spacing:-0.03em; line-height:1.1; margin-bottom:14px; }
+.contact-heading em { color:var(--accent-lt); font-style:normal; }
+.contact-sub { font-size:15px; color:rgba(255,255,255,0.45); margin-bottom:36px; max-width:460px; line-height:1.7; }
+.contact-btns { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:44px; }
+.contact-info { display:flex; flex-wrap:wrap; gap:24px; }
+.cinfo { display:flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(255,255,255,0.45); text-decoration:none; transition:color var(--t); }
+.cinfo:hover { color:white; }
+.cinfo svg { color:var(--accent-lt); flex-shrink:0; }
+
+/* FOOTER */
+footer { background:#111; padding:22px 32px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,0.18); letter-spacing:0.1em; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+@keyframes fadeLeft { from{opacity:0;transform:translateX(24px)} to{opacity:1;transform:none} }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.8);opacity:0} }
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  #hero{grid-template-columns:1fr}
+  .hero-card{display:none}
+  .nav-links{display:none}
+  .skills-grid{grid-template-columns:1fr 1fr}
+  .exp-card{grid-template-columns:1fr;gap:10px}
+  .ach-grid{grid-template-columns:1fr}
+  .edu-card{grid-template-columns:1fr}
+}
+@media(max-width:540px){
+  .wrap{padding:56px 20px}
+  .skills-grid{grid-template-columns:1fr}
+  .nav-inner{padding:0 20px}
+  .nav-actions .btn-ghost{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Divya<span>.</span>Rani</a>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://linkedin.com/in/divya-rani" target="_blank" class="btn btn-ghost" title="LinkedIn">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:rani.divya999@gmail.com" class="btn btn-outline">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+      <a href="#" onclick="dlResume();return false;" class="btn btn-primary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div>
+    <div class="hero-kicker">Backend Engineer </div>
+    <h1 class="hero-name">Divya<span>Rani</span></h1>
+    <p class="hero-role">Building resilient payment systems at scale.</p>
+    <p class="hero-bio">Senior Backend Engineer with 4+ years at Paytm &amp; Pine Labs, specializing in high-throughput payment gateways, microservices, and cloud-native infrastructure. Currently architecting the Qfix Payment Service at Pine Labs.</p>
+    <div class="hero-cta">
+      <a href="mailto:rani.divya999@gmail.com" class="btn btn-primary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Send Email
+      </a>
+      <a href="#" onclick="dlResume();return false;" class="btn btn-outline">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+      <a href="https://linkedin.com/in/divya-rani" target="_blank" class="btn btn-outline">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <div class="hero-social">
+      <a class="social-link" href="tel:+917073268482" title="Call">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.35h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.96-.99a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+      <a class="social-link" href="mailto:rani.divya999@gmail.com" title="Email">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+      <a class="social-link" href="https://linkedin.com/in/divya-rani" target="_blank" title="LinkedIn">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap" style="padding-top:0;padding-bottom:0;max-width:none;">
+    <div style="max-width:1100px;margin:0 auto;padding:80px 32px;">
+      <div class="section-header">
+        <span class="eyebrow">01 · Work</span>
+        <h2 class="section-title">Experience</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div>
+
+        <div class="exp-card">
+          <div>
+            <div class="exp-company">Pine Labs</div>
+            <div class="exp-period">Aug 2024 – Present</div>
+            <div class="exp-loc"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Noida, India</div>
+          </div>
+          <div>
+            <div class="role-badge gold"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>Senior Software Engineer</div>
+            <ul class="exp-points">
+              <li>Building backend for <strong>Qfix Payment Service</strong> — digital platform for educational institutes managing fee collection, operations &amp; workflows for students, parents, and merchants.</li>
+              <li>Integrated <strong>5+ payment gateways</strong>: Razorpay JS Checkout, HDFC Collect Now via Razorpay redirection, AU Bank Dynamic QR, BBPS, Plural EMI, and CC Avenue UPI Intent — reducing payment drop-offs.</li>
+              <li>Built a <strong>pluggable gateway abstraction layer</strong> using design patterns, enabling seamless onboarding of new providers with minimal code changes and zero disruption to existing flows.</li>
+            </ul>
+            <div class="exp-tags"><span class="exp-tag">Spring Boot</span><span class="exp-tag">Payment Gateways</span><span class="exp-tag">Design Patterns</span><span class="exp-tag">Microservices</span></div>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div>
+            <div class="exp-company">Paytm</div>
+            <div class="exp-period">Jul 2024 – Aug 2024</div>
+            <div class="exp-loc"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Noida, India</div>
+          </div>
+          <div>
+            <div class="role-badge gold"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>Senior Software Engineer</div>
+            <ul class="exp-points">
+              <li>Led <strong>Java &amp; Spring framework version upgrade</strong> across the payment gateway stack, improving security and enabling adoption of modern Spring Boot features.</li>
+              <li>Consolidated 2 microservices into 1, reducing infrastructure costs and simplifying the operational footprint.</li>
+            </ul>
+            <div class="exp-tags"><span class="exp-tag">Java</span><span class="exp-tag">Spring Framework</span><span class="exp-tag">Microservices</span></div>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div>
+            <div class="exp-company">Paytm</div>
+            <div class="exp-period">Jun 2021 – Jun 2024</div>
+            <div class="exp-loc"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Noida, India</div>
+          </div>
+          <div>
+            <div class="role-badge">Software Engineer</div>
+            <ul class="exp-points">
+              <li>Developed the <strong>merchant-facing layer</strong> of Paytm Payment Gateway, handling interactions between users, merchants, and internal PG systems for high-throughput transactions.</li>
+              <li>Implemented <strong>surcharge fee calculation</strong> for AddMoney and AddAndPay flows across multiple payment instruments, ensuring accurate fee computation at scale.</li>
+              <li>Engineered <strong>instant cashback on EMI transactions</strong>, coordinating with downstream services for real-time disbursement with transactional consistency.</li>
+              <li>Reduced application log volume by <strong>40%</strong> via structured log optimization; introduced filter-level logging for improved traceability and debugging.</li>
+              <li>Led <strong>AWS migration</strong> of payment services with zero-downtime transitions, collaborating with cross-domain teams on production releases.</li>
+              <li>Integrated <strong>Prometheus &amp; StatsD</strong> for real-time dashboard monitoring, enabling proactive alerting and faster incident resolution.</li>
+              <li>Achieved <strong>100% unit test coverage</strong> with JUnit &amp; Mockito; participated in on-call rotations for critical production incidents.</li>
+            </ul>
+            <div class="exp-tags"><span class="exp-tag">Java</span><span class="exp-tag">AWS</span><span class="exp-tag">Kafka</span><span class="exp-tag">Redis</span><span class="exp-tag">MySQL</span><span class="exp-tag">Prometheus</span><span class="exp-tag">Kubernetes</span><span class="exp-tag">JUnit</span></div>
+          </div>
+        </div>
+
+        <div class="exp-card">
+          <div>
+            <div class="exp-company">Paytm</div>
+            <div class="exp-period">Jan 2021 – May 2021</div>
+            <div class="exp-loc"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Noida, India</div>
+          </div>
+          <div>
+            <div class="role-badge">Software Engineer Intern</div>
+            <ul class="exp-points">
+              <li>Built core features for the <strong>E-Wallet Payment Gateway</strong>: user registration, merchant onboarding, and payment acceptance pipeline.</li>
+            </ul>
+            <div class="exp-tags"><span class="exp-tag">Java</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">Payment Systems</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- SKILLS -->
+<div class="skills-bg" id="skills">
+  <div style="max-width:1100px;margin:0 auto;padding:80px 32px;">
+    <div class="section-header">
+      <span class="eyebrow">02 · Stack</span>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-icon" style="background:#fef3c7">☕</div><div class="skill-cat">Languages</div><div class="skill-pills"><span class="pill">Java</span><span class="pill">C++</span><span class="pill">SQL</span></div></div>
+      <div class="skill-card"><div class="skill-icon" style="background:#dcfce7">🍃</div><div class="skill-cat">Frameworks</div><div class="skill-pills"><span class="pill">Spring Boot</span><span class="pill">Spring MVC</span><span class="pill">JPA/Hibernate</span><span class="pill">Maven</span></div></div>
+      <div class="skill-card"><div class="skill-icon" style="background:#dbeafe">🗄️</div><div class="skill-cat">Databases</div><div class="skill-pills"><span class="pill">MySQL</span><span class="pill">PostgreSQL</span><span class="pill">Redis</span><span class="pill">NoSQL</span></div></div>
+      <div class="skill-card"><div class="skill-icon" style="background:#fce7f3">☁️</div><div class="skill-cat">Cloud &amp; Infra</div><div class="skill-pills"><span class="pill">AWS EC2</span><span class="pill">S3</span><span class="pill">ECS</span><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">Kafka</span></div></div>
+      <div class="skill-card"><div class="skill-icon" style="background:#ede9fe">📊</div><div class="skill-cat">Observability</div><div class="skill-pills"><span class="pill">Prometheus</span><span class="pill">Grafana</span><span class="pill">StatsD</span></div></div>
+      <div class="skill-card"><div class="skill-icon" style="background:#f0fdf4">🧪</div><div class="skill-cat">Dev &amp; Testing</div><div class="skill-pills"><span class="pill">JUnit</span><span class="pill">Mockito</span><span class="pill">Git</span><span class="pill">CI/CD</span><span class="pill">REST APIs</span></div></div>
+      <div class="skill-card" style="grid-column:1/-1"><div class="skill-icon" style="background:#fff7ed">🏗️</div><div class="skill-cat">Concepts</div><div class="skill-pills"><span class="pill">Microservices</span><span class="pill">System Design (HLD &amp; LLD)</span><span class="pill">Design Patterns</span><span class="pill">Data Structures &amp; Algorithms</span><span class="pill">OOP</span><span class="pill">High-Throughput Payment Systems</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"><hr></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div style="max-width:1100px;margin:0 auto;padding:80px 32px;">
+    <div class="section-header">
+      <span class="eyebrow">03 · Education</span>
+      <h2 class="section-title">Education</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-pill">B.Tech · 2017 – 2021</div>
+        <div class="edu-institute">National Institute of Technology, Patna</div>
+        <div class="edu-degree">Computer Science &amp; Engineering</div>
+      </div>
+      <div class="edu-score">
+        <div class="score-num">8.78</div>
+        <div class="score-label">CGPA / 10</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"><hr></div>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div style="max-width:1100px;margin:0 auto;padding:80px 32px;">
+    <div class="section-header">
+      <span class="eyebrow">04 · Awards</span>
+      <h2 class="section-title">Achievements</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card">
+        <div class="ach-emoji">🏆</div>
+        <div>
+          <div class="ach-title">Paytm Rockstar Award ×2</div>
+          <div class="ach-desc">Recognized twice for delivering complex projects ahead of schedule and being a key contributor to AWS migration production releases.</div>
+        </div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-emoji">🥈</div>
+        <div>
+          <div class="ach-title">1st Runner-Up · NIT Patna Hackathon 2020</div>
+          <div class="ach-desc">Competed against 200+ participants across the institute and secured runner-up position.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-bg" id="contact">
+  <div style="max-width:1100px;margin:0 auto;padding:80px 32px;">
+    <h2 class="contact-heading">Let's work<br><em>together.</em></h2>
+    <p class="contact-sub">Open to backend engineering roles, payment infrastructure, and distributed systems challenges.</p>
+    <div class="contact-btns">
+      <a href="mailto:rani.divya999@gmail.com" class="btn btn-white">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Send Email
+      </a>
+      <a href="https://linkedin.com/in/divya-rani" target="_blank" class="btn btn-dk">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        View LinkedIn
+      </a>
+      <a href="#" onclick="dlResume();return false;" class="btn btn-dk">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+    </div>
+    <div class="contact-info">
+      <a href="mailto:rani.divya999@gmail.com" class="cinfo"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>rani.divya999@gmail.com</a>
+      <a href="tel:+917073268482" class="cinfo"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.35h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.96-.99a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+91-7073268482</a>
+      <a href="https://linkedin.com/in/divya-rani" target="_blank" class="cinfo"><svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>divya-rani</a>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 DIVYA RANI · SENIOR BACKEND ENGINEER · NOIDA, INDIA</footer>
+
+<script>
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 90) cur = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, {passive:true});
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => {
+    if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'), i*70); io.unobserve(e.target); }
+  });
+}, {threshold:0.08});
+document.querySelectorAll('.exp-card,.skill-card,.ach-card,.edu-card').forEach(el=>io.observe(el));
+
+function dlResume(){
+  alert('📄 Replace this with the actual resume PDF URL.\n\nTo enable: set the href of download buttons to the PDF link and add a download attribute.');
+}
+</script>
+</body>
+</html>
